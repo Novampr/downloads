@@ -1,11 +1,11 @@
 {
-  "name": "patternfly-seed",
-  "version": "0.0.2",
-  "description": "An open source build scaffolding utility for web apps.",
-  "repository": "https://github.com/patternfly/patternfly-react-seed.git",
-  "homepage": "https://patternfly-react-seed.surge.sh",
+  "name": "downloads",
+  "version": "0.0.1",
+  "description": "Provides download frontend for our Maven repository",
+  "repository": "https://github.com/opencollaboration/downloads",
+  "homepage": "https://downloads.opencollab.dev",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "prebuild": "npm run type-check && npm run clean",
     "dr:surge": "node dr-surge.js",
