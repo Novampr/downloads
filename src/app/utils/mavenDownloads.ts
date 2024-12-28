@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const MAVEN_VERSIONS = "https://repo.opencollab.dev/api/maven/versions/maven-snapshots";
-const MAVEN_DETAILS = "https://repo.opencollab.dev/api/maven/details/maven-snapshots";
-const MAVEN_DOWNLOADS = "https://repo.opencollab.dev/maven-snapshots";
+const REPO_URL = "https://repo.opencollab.dev";
+const REPOSITORY = "maven-snapshots";
+const MAVEN_VERSIONS = `${REPO_URL}/api/maven/versions/${REPOSITORY}`;
+const MAVEN_DETAILS = `${REPO_URL}/api/maven/details/${REPOSITORY}`;
+const MAVEN_DOWNLOADS = `${REPO_URL}/${REPOSITORY}`;
+const MAVEN_LATEST = `${REPO_URL}/api/maven/latest/file/${REPOSITORY}`;
 
 export interface MavenVersion {
     version: string;
@@ -92,4 +95,12 @@ export async function getMavenDownloads(groupId: string, artifactId: string, ign
     }
     versions = versions.reverse();
     return versions;
+}
+
+export function getLatestJar(groupId: string, artifactId: string, version: string | undefined = undefined): string {
+    const path = `${groupId.replace(/\./g, '/')}/${artifactId}`;
+    if (version) {
+        return `${MAVEN_LATEST}/${path}/${version}?extension=jar`;
+    }
+    return `${MAVEN_LATEST}/${path}?extension=jar`;
 }

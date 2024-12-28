@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { MavenVersion, getMavenDownloads } from "@app/utils/mavenDownloads";
+import {MavenVersion, getLatestJar, getMavenDownloads} from "@app/utils/mavenDownloads";
 import {
   Button,
   DataList,
@@ -44,17 +44,29 @@ const DownloadComponent: React.FC<DownloadComponentProps> = (props) => {
 
   if (data.length === 1) {
     return (
-      <PageSection>
-        <Title headingLevel="h1" size="lg">{props.projectName}</Title>
-        <DataList aria-label={props.projectName}>
-          <BuildsComponent artifacts={data[0].artifacts} version={data[0].version} />
-        </DataList>
-      </PageSection>
+      <>
+        <PageSection>
+          <p>Download the latest build <Button component="a"
+                                               href={getLatestJar(props.groupId, props.artifactId, data[0].version)}
+                                               variant="link" isInline>here</Button>.</p>
+        </PageSection>
+        <PageSection>
+          <Title headingLevel="h1" size="lg">{props.projectName}</Title>
+          <DataList aria-label={props.projectName}>
+            <BuildsComponent artifacts={data[0].artifacts} version={data[0].version} />
+          </DataList>
+        </PageSection>
+      </>
     );
   }
 
   return (
     <>
+      <PageSection>
+        <p>Download the latest build <Button component="a"
+                                             href={getLatestJar(props.groupId, props.artifactId)}
+                                             variant="link" isInline>here</Button>.</p>
+      </PageSection>
       {data.map(value => (
         <PageSection key={value.version} hasBodyWrapper={false}>
           <Title headingLevel="h1" size="lg">{props.projectName} - {value.version}</Title>
