@@ -8,7 +8,7 @@ RUN npm ci && \
 FROM registry.access.redhat.com/ubi9/nginx-124
 
 COPY --from=builder /opt/app-root/src/dist /tmp/src/
-COPY --from=builder /opt/app-root/src/dist/index.html /tmp/src/404.html
+COPY nginx.conf  /opt/app-root/etc/nginx.default.d/nginx.conf
 
 # Assemble the image
 RUN /usr/libexec/s2i/assemble
