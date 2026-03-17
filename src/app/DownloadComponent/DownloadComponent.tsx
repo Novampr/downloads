@@ -99,7 +99,9 @@ const BuildsComponent: React.FC<MavenVersion> = (props) => {
               dataListCells={[
                 <DataListCell key="Id">#{value.build}</DataListCell>,
                 <DataListCell key="Changes" style={styles}>
-                    <a href={getCommitUrl(value.properties)}>{value.properties["git.commit.message.short"]}</a>
+                    {value.properties["git.commit.id"] && value.properties["github.repo"] && value.properties["git.commit.message.short"]
+                      ? <a href={getCommitUrl(value.properties)}>{value.properties["git.commit.message.short"]}</a>
+                      : value.properties["git.commit.message.short"] || null}
                 </DataListCell>,
                 <DataListCell key="URL">
                   <Button component="a" href={value.downloadUrl} variant="primary">Download</Button>

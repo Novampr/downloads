@@ -24,7 +24,7 @@ interface IAppLayout {
 }
 
 const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const [sidebarOpen, setSidebarOpen] = React.useState(() => window.innerWidth >= 768);
   const masthead = (
     <Masthead>
       <MastheadMain>

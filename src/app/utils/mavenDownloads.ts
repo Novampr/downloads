@@ -41,11 +41,11 @@ const getProperties = async (url: string): Promise<object> => {
         }, {});
     } catch (error) {
         console.error('Error fetching data:', error);
-        throw error;
+        return {};
     }
 };
 
-export async function getMavenDownloads(groupId: string, artifactId: string, ignoredVersions: Set<string>): Promise<MavenVersion[]> {
+export async function getMavenDownloads(groupId: string, artifactId: string, ignoredVersions: Set<string> = new Set()): Promise<MavenVersion[]> {
     const path = `${groupId.replace(/\./g, '/')}/${artifactId}`;
     const versionData = await fetchData(`${MAVEN_VERSIONS}/${path}`);
 
@@ -84,7 +84,13 @@ export async function getMavenDownloads(groupId: string, artifactId: string, ign
                 properties: {}
             });
         }
-        // Convert to array and reverse order
+
+        // Skip versions with no matching JAR builds
+        if (builds.size === 0) {
+            continue;
+        }
+
+        // Convert to array and reverse order (newest build first)
         let buildsList = Array.from(builds.values());
         buildsList = buildsList.reverse();
 

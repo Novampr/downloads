@@ -45,7 +45,8 @@ const routes: AppRouteConfig[] = [
         params: {
           projectName: "Cloudburst",
           groupId: "org.cloudburstmc",
-          artifactId: "cloudburst-server"
+          artifactId: "cloudburst-server",
+          ignoredVersions: ["0.0.1-SNAPSHOT", "1.0.0-SNAPSHOT"]
         }
       },
       {
