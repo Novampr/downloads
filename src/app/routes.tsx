@@ -64,6 +64,37 @@ const routes: AppRouteConfig[] = [
       }
     ],
   },
+  {
+    label: 'GeyserMC',
+    routes: [
+      {
+        component: DownloadComponent,
+        exact: true,
+        label: 'Floodgate Bungee Proxy',
+        path: '/floodgate-bungee-proxy',
+        title: 'Downloads | GeyserMC',
+        params: {
+          projectName: "Floodgate Bungee Proxy",
+          groupId: "org.geysermc.floodgate",
+          artifactId: "bungee",
+          acceptedVersions: ["feat-fix_proxy_library_clash-.*"]
+        }
+      },
+      {
+        component: DownloadComponent,
+        exact: true,
+        label: 'Floodgate Velocity Proxy',
+        path: '/floodgate-velocity-proxy',
+        title: 'Downloads | GeyserMC',
+        params: {
+          projectName: "Floodgate Velocity Proxy",
+          groupId: "org.geysermc.floodgate",
+          artifactId: "velocity",
+          acceptedVersions: ["feat-fix_proxy_library_clash-.*"]
+        }
+      }
+    ],
+  },
 ];
 
 // a custom hook for sending focus to the primary content container
@@ -93,7 +124,7 @@ const RouteWithTitleUpdates = ({ component: Component, title, params, ...rest }:
     if (params !== undefined) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      return <Component {...rest} {...routeProps} projectName={params.projectName} artifactId={params.artifactId} groupId={params.groupId} ignoredVersions={params.ignoredVersions}/>;
+      return <Component {...rest} {...routeProps} projectName={params.projectName} artifactId={params.artifactId} groupId={params.groupId} ignoredVersions={params.ignoredVersions} acceptedVersions={params.acceptedVersions}/>;
     } else {
       return <Component {...rest} {...routeProps}/>;
     }
