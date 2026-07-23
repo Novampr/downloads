@@ -45,7 +45,7 @@ const getProperties = async (url: string): Promise<object> => {
     }
 };
 
-export async function getMavenDownloads(groupId: string, artifactId: string, ignoredVersions: Set<string> = new Set()): Promise<MavenVersion[]> {
+export async function getMavenDownloads(groupId: string, artifactId: string, ignoredVersions: Set<string> = new Set(), acceptedVersions: Set<string> = new Set()): Promise<MavenVersion[]> {
     const path = `${groupId.replace(/\./g, '/')}/${artifactId}`;
     const versionData = await fetchData(`${MAVEN_VERSIONS}/${path}`);
 
@@ -54,6 +54,21 @@ export async function getMavenDownloads(groupId: string, artifactId: string, ign
         if (ignoredVersions.has(version)) {
             continue;
         }
+
+        if (acceptedVersions.size > 0) {
+            let accepted = false;
+
+            acceptedVersions.forEach(function(acceptedVersion) {
+                if (accepted) return;
+                if (version.match(new RegExp(acceptedVersion, "i"))) {
+                    console.log("matchyed " + version);
+                    accepted = true;
+                }
+            });
+
+            if (!accepted) continue;
+        }
+
         const details = await fetchData(`${MAVEN_DETAILS}/${path}/${version}`);
         const builds = new Map<string, MavenArtifact>()
 

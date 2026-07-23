@@ -17,6 +17,7 @@ export interface DownloadComponentProps {
   artifactId: string;
   groupId: string;
   ignoredVersions?: string[];
+  acceptedVersions?: string[];
 }
 
 const DownloadComponent: React.FC<DownloadComponentProps> = (props) => {
@@ -27,7 +28,7 @@ const DownloadComponent: React.FC<DownloadComponentProps> = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const result = await getMavenDownloads(props.groupId, props.artifactId, new Set<string>(props.ignoredVersions));
+        const result = await getMavenDownloads(props.groupId, props.artifactId, new Set<string>(props.ignoredVersions), new Set<string>(props.acceptedVersions));
         setData(result);
       } catch (err) {
         setError('Failed to fetch data');
@@ -37,7 +38,7 @@ const DownloadComponent: React.FC<DownloadComponentProps> = (props) => {
     };
 
     getData();
-  }, [props.groupId, props.artifactId, props.ignoredVersions]);
+  }, [props.groupId, props.artifactId, props.ignoredVersions, props.acceptedVersions]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
