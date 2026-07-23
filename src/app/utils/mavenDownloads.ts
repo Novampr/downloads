@@ -60,10 +60,7 @@ export async function getMavenDownloads(groupId: string, artifactId: string, ign
 
             acceptedVersions.forEach(function(acceptedVersion) {
                 if (accepted) return;
-                if (version.match(new RegExp(acceptedVersion, "i"))) {
-                    console.log("matchyed " + version);
-                    accepted = true;
-                }
+                if (version.match(new RegExp(acceptedVersion, "i"))) accepted = true;
             });
 
             if (!accepted) continue;
